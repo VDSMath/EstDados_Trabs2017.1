@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void mergeSort(int* V, int ini, int fim){
+  int meio;
+  if(ini < fim){
+    meio = floor((ini + fim)/2);
+    mergeSort(V, ini, meio);
+    mergeSort(V, meio+1, fim);
+    merge(V, inicio, meio, fim);
+  }
+}
