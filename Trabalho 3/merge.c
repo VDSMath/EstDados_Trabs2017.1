@@ -28,7 +28,7 @@ void merge(int* V, int ini, int meio, int fim);
 
     if(!strcmp(argv[1], "-m")){
       puts("Merge Sort");
-      mergeSort(V, start, end);
+      mergeSort(V, start, end-1);
       print(V, end);
     }
 
@@ -50,7 +50,7 @@ void merge(int* V, int ini, int meio, int fim);
 
   void mergeSort(int* V, int ini, int fim){
     int meio;
-    if(fim - ini >= 2){
+    if(ini < fim){
       meio = (ini + fim)/2; //Calcula o elemento na metade do vetor, arredondado para baixo
       mergeSort(V, ini, meio);   //
       mergeSort(V, meio+1, fim); //Divide o vetor em dois vetores menores
