@@ -3,15 +3,23 @@
 #include <string.h>
 #include <math.h>
 
+/*
+Nome: Matheus Vinicius S. de Figueiredo
+Trabalho 5: Friends
+
+O trabalho foi feito usando o conceito de Conjuntos Disjuntos, com união por rank
+e compressão de caminhos, como visto na disciplina Estrutura de Dados.
+*/
+
 typedef struct _conjunto{
   struct _conjunto* pai;
   int rank;
 }conjunto;
 
-conjunto* buscar(conjunto* c);
-void fundir(conjunto* a, conjunto* b);
-void repeticoes(int r);
-void formarrelacoes(int n, int m);
+conjunto* buscar(conjunto* c);//Acha a raiz de um conjunto
+void fundir(conjunto* a, conjunto* b);//Une dois conjuntos, com compressão de caminhos
+void repeticoes(int r);//Executa o programa r vezes, de acordo com a entrada
+void formarrelacoes(int n, int m);//Faz as uniões necessárias e retorna o maior rank
 
 int main(int argc, char **argv){
   int repet;
@@ -49,26 +57,33 @@ void formarrelacoes(int n, int m){
   while(m > 0){
       scanf("%d %d", &a, &b);
 
-      fundir((cid + a), (cid + b));
-      if((cid + a)->rank > maior->rank)
-        maior = (cid + a);
-      if((cid + b)->rank > maior->rank)
-        maior = (cid + b);
+
+      fundir((cid + a - 1), (cid + b - 1));
+      if((cid + a -1)->rank > maior->rank)
+        maior = (cid + a - 1);
+      if((cid + b - 1)->rank > maior->rank)
+        maior = (cid + b - 1);
 
       m--;
   }
 
-  printf("%d", maior->rank);
+  printf("%d\n", maior->rank + 1);
 }
 
 conjunto* buscar(conjunto* c){
-  if (c->pai != NULL)
+  if (c->pai != NULL){
     c->pai = buscar(c->pai);
-  return c->pai;
+    return c->pai;
+  }
+  else
+    return c;
 }
 void fundir(conjunto* a, conjunto* b){
   conjunto* raiza = buscar(a);
   conjunto* raizb = buscar(b);
+
+  if(raiza == raizb)
+    return;
 
   if(raiza->rank <= raizb->rank){
     raiza->pai = raizb;
